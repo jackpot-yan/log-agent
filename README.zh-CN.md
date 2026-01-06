@@ -48,19 +48,39 @@ graph TD
 
 ## 项目结构
 
-项目被组织成一个 Cargo Workspace，包含几个专用的 crates。这种设计促进了模块化和明确的关注点分离。
+项目被组织成一个 Cargo Workspace，具有明确的关注点分离。下面的详细结构概述了为初始实现阶段规划的每个文件的角色。
 
 ```text
 log-shuttle/
-├── Cargo.toml          # Workspace 配置
+├── Cargo.toml               # 工作区根目录
 ├── README.md
 ├── README.zh-CN.md
 └── crates/
-    ├── agent/          # 主程序：协调所有其他组件
-    ├── common/         # 共享数据结构 (Event, Error)
-    ├── input/          # 输入源 (例如, FileInput, EBPFInput)
-    ├── output/         # 输出端 (例如, Stdout, TCP, gRPC)
-    └── pipeline/       # 核心逻辑：批处理、路由和反压
+    ├── agent/
+    │   └── src/
+    │       └── main.rs      # 主入口点，CLI解析，线程管理
+    │
+    ├── common/
+    │   └── src/
+    │       ├── lib.rs       # Crate 根，模块声明
+    │       ├── event.rs     # `Event` 结构的定义
+    │       └── error.rs     # 统一 `AgentError` 枚举的定义
+    │
+    ├── input/
+    │   └── src/
+    │       ├── lib.rs       # Crate 根，定义 `Input` trait
+    │       └── file.rs      # 用于监控文件的 `FileInput` 实现
+    │
+    ├── pipeline/
+    │   └── src/
+    │       ├── lib.rs       # Crate 根，定义 `Pipeline` 组件
+    │       ├── batch.rs     # `Batch` 结构及相关逻辑
+    │       └── channel.rs   # 对 crossbeam-channel 的封装，用于发送/接收
+    │
+    └── output/
+        └── src/
+            ├── lib.rs       # Crate 根，定义 `Output` trait
+            └── stdout.rs    # `StdoutOutput` 实现
 ```
 
 ### Crate 职责

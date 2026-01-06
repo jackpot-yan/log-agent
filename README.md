@@ -48,19 +48,39 @@ graph TD
 
 ## Project Structure
 
-The project is organized as a Cargo Workspace with several dedicated crates. This design promotes modularity and clear separation of concerns.
+The project is organized as a Cargo Workspace with a clear separation of concerns. The detailed structure below outlines the role of each file planned for the initial implementation phase.
 
 ```text
 log-shuttle/
-├── Cargo.toml          # Workspace configuration
+├── Cargo.toml               # Workspace root
 ├── README.md
 ├── README.zh-CN.md
 └── crates/
-    ├── agent/          # Main binary: orchestrates all other components
-    ├── common/         # Shared data structures (Event, Error)
-    ├── input/          # Input sources (e.g., FileInput, EBPFInput)
-    ├── output/         # Output sinks (e.g., Stdout, TCP, gRPC)
-    └── pipeline/       # Core logic for batching, routing, and backpressure
+    ├── agent/
+    │   └── src/
+    │       └── main.rs      # Main entry point, CLI parsing, thread management
+    │
+    ├── common/
+    │   └── src/
+    │       ├── lib.rs       # Crate root, module declarations
+    │       ├── event.rs     # Definition of the `Event` struct
+    │       └── error.rs     # Definition of the unified `AgentError` enum
+    │
+    ├── input/
+    │   └── src/
+    │       ├── lib.rs       # Crate root, defines `Input` trait
+    │       └── file.rs      # `FileInput` implementation for tailing files
+    │
+    ├── pipeline/
+    │   └── src/
+    │       ├── lib.rs       # Crate root, defines `Pipeline` components
+    │       ├── batch.rs     # `Batch` struct and related logic
+    │       └── channel.rs   # Wrappers around crossbeam-channel for sender/receiver
+    │
+    └── output/
+        └── src/
+            ├── lib.rs       # Crate root, defines `Output` trait
+            └── stdout.rs    # `StdoutOutput` implementation
 ```
 
 ### Crate Responsibilities
