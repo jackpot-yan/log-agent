@@ -1,0 +1,11 @@
+[package]
+name = "agent"
+version = "0.1.0"
+edition = "2021"
+
+[dependencies]
+# This will depend on the other crates, e.g.:
+# common = { path = "../common" }
+# input = { path = "../input" }
+# pipeline = { path = "../pipeline" }
+# output = { path = "../output" }

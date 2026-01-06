@@ -1,0 +1,15 @@
+[workspace]
+members = [
+    "crates/agent",
+    "crates/common",
+    "crates/input",
+    "crates/output",
+    "crates/pipeline",
+]
+default-members = ["crates/agent"]
+
+[workspace.dependencies]
+# Here we will define dependencies that are shared across many crates
+# For example:
+# anyhow = "1.0"
+# crossbeam = "0.8"
