@@ -178,3 +178,6 @@ sudo ./log-shuttle --ebpf-http-tracing --output-grpc 10.0.1.100:50051
 *   [ ] **`EBPFInput`**: 创建新的输入组件，从 eBPF 环形缓冲区读取事件。
 *   [ ] **数据融合 (Data Fusion)**: 将 eBPF 事件与进程 ID 相关联。
 ---
+
+### 参考资料
+1. clap命令解析工具：docs.rs/clap/4.5.54/clap/

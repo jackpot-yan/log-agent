@@ -179,3 +179,6 @@ We will build this project in deliberate phases. Each phase is a valuable projec
 *   [ ] **Data Fusion**: In the pipeline, correlate eBPF events with process IDs.
 
 ---
+
+### References
+1. clap command-line argument parser: docs.rs/clap/4.5.54/clap/
