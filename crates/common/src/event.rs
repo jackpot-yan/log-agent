@@ -1,3 +1,4 @@
+use crate::error::Result;
 use std::time::{SystemTime, UNIX_EPOCH};
 
 pub struct Event {
@@ -7,15 +8,14 @@ pub struct Event {
 }
 
 impl Event {
-    pub fn new(source: String, payload: Vec<u8>) -> Self {
+    pub fn new(source: String, payload: Vec<u8>) -> Result<Self> {
         let timestamp = SystemTime::now()
-            .duration_since(UNIX_EPOCH)
-            .expect("Time went backwards")
+            .duration_since(UNIX_EPOCH)?
             .as_nanos() as u64;
-        Event {
+        Ok(Event {
             timestamp,
             source,
             payload,
-        }
+        })
     }
 }
