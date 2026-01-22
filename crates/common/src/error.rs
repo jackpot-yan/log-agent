@@ -13,6 +13,9 @@ pub enum Error {
 
     #[error("system time error: {0}")]
     SystemTime(#[from] std::time::SystemTimeError),
+
+    #[error("{0}")]
+    Msg(String),
 }
 
 pub type Result<T> = std::result::Result<T, Error>;
