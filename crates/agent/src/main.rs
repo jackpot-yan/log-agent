@@ -1,8 +1,8 @@
 use clap::Parser;
-use std::path::PathBuf;
+use common::error::{Error, Result};
 use input::files::FileSource;
-use output::{Console, Output};
-use common::error::{Result, Error};
+use output::console::{Console, Output};
+use std::path::PathBuf;
 
 #[derive(Parser, Debug)]
 #[command(version, about, long_about = None)]
@@ -18,7 +18,10 @@ fn main() -> Result<()> {
     let cli = Cli::parse();
 
     if !cli.file_input.exists() {
-        return Err(Error::Msg(format!("file not found: {}", cli.file_input.to_string_lossy())));
+        return Err(Error::Msg(format!(
+            "file not found: {}",
+            cli.file_input.to_string_lossy()
+        )));
     }
 
     let input = FileSource::new(cli.file_input, None)?;
